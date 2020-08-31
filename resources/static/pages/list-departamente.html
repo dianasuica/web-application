@@ -1,0 +1,57 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="vendor/fontawesome/fontawesome.min.css" rel="stylesheet" type="text/css">
+    <link href="vendor/fontawesome/all.min.css" rel="stylesheet" type="text/css">
+
+    <script src="vendor/angular/angular.js" type="text/javascript"></script>
+    <script src="vendor/angular/angular-animate.js" type="text/javascript"></script>
+    <script src="vendor/angular/angular-sanitize.js" type="text/javascript"></script>
+    <script src="vendor/angular/ui-bootstrap-tpls-3.0.6.js" type="text/javascript"></script>
+    <script src="vendor/bootstrap/js/bootstrap.js" type="text/javascript"></script>
+    <script src="vendor/fontawesome/fontawesome.min.js" type="text/javascript"></script>
+    <script src="js/departamente.js" type="text/javascript"></script>
+    <title>Departamente</title>
+</head>
+<body ng-app="app" ng-controller="departamente">
+
+
+
+<form class="form-inline">
+    <div class="form-group">
+        <label >Search</label>
+        <input type="text" ng-model="search" class="form-control" placeholder="Search">
+    </div>
+</form>
+
+<table class="table table-striped table-hover">
+    <caption>Lista de departamente</caption>
+    <thead class="thead-light">
+    <tr>
+        <th ng-click="sort('idDepartament')">Id
+            <span ng-show="sortKey=='idDepartament'" ng-class="{'fas fa-chevron-up':reverse,'fas fa-chevron-down':!reverse}"></span>
+        </th>
+        <th ng-click="sort('denumire')">Denumire
+            <span ng-show="sortKey=='denumire'" ng-class="{'fas fa-chevron-up':reverse,'fas fa-chevron-down':!reverse}"></span>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr dir-paginate="departament in departamentList|orderBy:sortKey:reverse|filter:search|itemsPerPage:10">
+        <td>{{departament.idDepartament}}</td>
+        <td>{{departament.denumire}}</td>
+        <td>{{angajat.prenume}}</td>
+    </tr>
+    </tbody>
+
+</table>
+
+<dir-pagination-controls
+        max-size="5"
+        direction-links="true"
+        boundary-links="true" >
+</dir-pagination-controls>
+
+</body>
+</html>

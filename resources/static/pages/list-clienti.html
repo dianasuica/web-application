@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="vendor/fontawesome/fontawesome.min.css" rel="stylesheet" type="text/css">
+    <link href="vendor/fontawesome/all.min.css" rel="stylesheet" type="text/css">
+
+    <script src="vendor/angular/angular.js" type="text/javascript"></script>
+    <script src="vendor/angular/angular-animate.js" type="text/javascript"></script>
+    <script src="vendor/angular/angular-sanitize.js" type="text/javascript"></script>
+    <script src="vendor/angular/ui-bootstrap-tpls-3.0.6.js" type="text/javascript"></script>
+    <script src="vendor/bootstrap/js/bootstrap.js" type="text/javascript"></script>
+    <script src="vendor/fontawesome/fontawesome.min.js" type="text/javascript"></script>
+    <script src="js/clienti.js" type="text/javascript"></script>
+    <title>Clienti</title>
+</head>
+<body ng-app="app" ng-controller="clienti">
+
+
+    <form class="form-inline">
+        <div class="form-group">
+            <label >Search</label>
+            <input type="text" ng-model="search" class="form-control" placeholder="Search">
+        </div>
+    </form>
+
+    <table class="table table-striped table-hover">
+        <caption>Lista de clienti</caption>
+        <thead class="thead-light">
+        <tr>
+            <th ng-click="sort('idClient')">Id
+                <span ng-show="sortKey=='idClient'" ng-class="{'fas fa-chevron-up':reverse,'fas fa-chevron-down':!reverse}"></span>
+            </th>
+            <th ng-click="sort('nume')">Nume
+                <span ng-show="sortKey=='nume'" ng-class="{'fas fa-chevron-up':reverse,'fas fa-chevron-down':!reverse}"></span>
+            </th>
+            <th ng-click="sort('prenume')">Prenume
+                <span ng-show="sortKey=='prenume'" ng-class="{'fas fa-chevron-up':reverse,'fas fa-chevron-down':!reverse}"></span>
+            </th>
+            <th ng-click="sort('cnp')">CNP
+                <span ng-show="sortKey=='cnp'" ng-class="{'fas fa-chevron-up':reverse,'fas fa-chevron-down':!reverse}"></span>
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr dir-paginate="client in clientList|orderBy:sortKey:reverse|filter:search|itemsPerPage:10">
+                <td>{{client.idClient}}</td>
+                <td>{{client.nume}}</td>
+                <td>{{client.prenume}}</td>
+                <td>{{client.cnp}}</td>
+                <td><button type="button" class="btn btn-primary" ng-click="open(client.lista_conturi)">Conturi</button></td>
+            </tr>
+        </tbody>
+
+    </table>
+
+        <dir-pagination-controls
+                max-size="5"
+                direction-links="true"
+                boundary-links="true" >
+        </dir-pagination-controls>
+
+
+    <div class="col-lg-6 col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                    <label for="repeatSelect"> Media de cheltuieli a clientului: </label>
+                    <select id="repeatSelect" ng-model="id" ng-change="medie()">
+                        <option value="0" disabled selected="selected">Selectati un client</option>
+                        <option ng-repeat="client in clientList" value="{{client.idClient}}">{{client.nume}} {{client.prenume}}</option>
+                    </select>
+            </div>
+            <div class="card-body">
+                <canvas id="line" class="chart chart-line" chart-data="medii"
+                        chart-labels="luni" chart-series="series" chart-options="options"
+                        chart-dataset-override="datasetOverride">
+                </canvas>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
